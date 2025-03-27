@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Pricing Calculator - SiteForge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900">
+    <!-- Header -->
+    <header class="fixed w-full bg-white dark:bg-gray-800 shadow-md z-50">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="text-2xl font-bold text-gray-900 dark:text-white">SiteForge</a>
+                
+                <!-- Mobile menu button -->
+                <button id="menuBtn" class="md:hidden text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path class="menu-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        <path class="menu-close hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">Home</a>
+                    <a href="index.html#services" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">Services</a>
+                    <a href="index.html#portfolio" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">Portfolio</a>
+                    <a href="index.html#pricing" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">Pricing</a>
+                    <a href="index.html#contact" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">Contact</a>
+                    
+                    <!-- Dark mode toggle -->
+                    <button id="darkModeToggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <!-- Sun icon -->
+                        <svg class="w-6 h-6 text-gray-600 dark:text-gray-300 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        <!-- Moon icon -->
+                        <svg class="w-6 h-6 text-gray-600 dark:text-gray-300 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div id="mobileMenu" class="hidden md:hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="index.html" class="block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">Home</a>
+                    <a href="index.html#services" class="block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">Services</a>
+                    <a href="index.html#portfolio" class="block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">Portfolio</a>
+                    <a href="index.html#pricing" class="block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">Pricing</a>
+                    <a href="index.html#contact" class="block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">Contact</a>
+                    
+                    <!-- Mobile Dark mode toggle -->
+                    <button id="mobileDarkModeToggle" class="w-full text-left px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">
+                        <div class="flex items-center">
+                            <span class="dark:hidden">Switch to Dark Mode</span>
+                            <span class="hidden dark:block">Switch to Light Mode</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content with padding for fixed header -->
+    <div class="pt-20">
+        <div class="container mx-auto px-4 py-8 max-w-3xl">
+            <h1 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-8">Website Pricing Calculator</h1>
+            
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8">
+                <!-- Step 1: Website Type -->
+                <div class="mb-6">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">1. Choose Website Type</h2>
+                    <select id="websiteType" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                        <option value="simple">Simple Website (Personal Brands, Startups)</option>
+                        <option value="standard">Standard Website (Growing Businesses)</option>
+                        <option value="advanced">Advanced Website (High-Level Business)</option>
+                    </select>
+                </div>
+
+                <!-- Step 2: Features -->
+                <div class="mb-6">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">2. Select Features</h2>
+                    
+                    <!-- Pages -->
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-gray-300 mb-2">Number of Pages</label>
+                        <select id="pages" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                            <option value="1">1 Page</option>
+                            <option value="3">3 Pages</option>
+                            <option value="5">5 Pages</option>
+                            <option value="10">10 Pages</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                    </div>
+
+                    <!-- Toggles -->
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <label class="text-gray-700 dark:text-gray-300">SEO Optimization</label>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="seo" class="sr-only peer">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary-600"></div>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <label class="text-gray-700 dark:text-gray-300">Responsive Design</label>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="responsive" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary-600"></div>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <label class="text-gray-700 dark:text-gray-300">Contact Form</label>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="contact" class="sr-only peer">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary-600"></div>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <label class="text-gray-700 dark:text-gray-300">Payment Integration</label>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="payment" class="sr-only peer">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary-600"></div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Delivery Time -->
+                <div class="mb-6">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">3. Choose Delivery Time</h2>
+                    <select id="delivery" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                        <option value="24">24 Hours (Express)</option>
+                        <option value="2-4" selected>2-4 Days</option>
+                        <option value="5-7">5-7 Days</option>
+                    </select>
+                </div>
+
+                <!-- Step 4: Price & Actions -->
+                <div class="mt-8 p-6 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                    <div class="text-center mb-6">
+                        <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">Estimated Price</h3>
+                        <div class="text-4xl font-bold text-primary-600 dark:text-primary-400" id="totalPrice">₹0</div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button id="demoBtn" class="w-full px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                            View Demo
+                        </button>
+                        <a id="whatsappBtn" href="#" target="_blank" class="w-full px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-center">
+                            Order on WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">SiteForge</h3>
+                    <p class="text-gray-400">Creating beautiful, functional websites for your business.</p>
+                </div>
+                <div>
+                    <h4 class="text-xl font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html#services" class="text-gray-400 hover:text-white transition-colors">Services</a></li>
+                        <li><a href="index.html#portfolio" class="text-gray-400 hover:text-white transition-colors">Portfolio</a></li>
+                        <li><a href="index.html#pricing" class="text-gray-400 hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="index.html#contact" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xl font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="privacy-policy.html" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xl font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2">
+                        <li class="text-gray-400">Email1: uddan1711@gmail.com</li>
+                        <li class="text-gray-400">Email2: prajapatijay17112007@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 SiteForge. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dark mode toggle
+        function initDarkMode() {
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            document.documentElement.classList.toggle('dark', isDarkMode);
+        }
+
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDark);
+        }
+
+        // Initialize dark mode
+        initDarkMode();
+
+        // Event listeners for dark mode toggles
+        document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
+        document.getElementById('mobileDarkModeToggle').addEventListener('click', toggleDarkMode);
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOpenIcon = menuBtn.querySelector('.menu-open');
+        const menuCloseIcon = menuBtn.querySelector('.menu-close');
+
+        menuBtn.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.toggle('hidden');
+            menuOpenIcon.classList.toggle('hidden', !isOpen);
+            menuCloseIcon.classList.toggle('hidden', isOpen);
+        });
+
+        // Base prices
+        const prices = {
+            simple: 999,
+            standard: 1499,
+            advanced: 2499,
+            page: 100,
+            seo: 200,
+            responsive: 100,
+            contact: 100,
+            payment: 500,
+            express: 499
+        };
+
+        // Elements
+        const elements = {
+            websiteType: document.getElementById('websiteType'),
+            pages: document.getElementById('pages'),
+            seo: document.getElementById('seo'),
+            responsive: document.getElementById('responsive'),
+            contact: document.getElementById('contact'),
+            payment: document.getElementById('payment'),
+            delivery: document.getElementById('delivery'),
+            totalPrice: document.getElementById('totalPrice'),
+            whatsappBtn: document.getElementById('whatsappBtn'),
+            demoBtn: document.getElementById('demoBtn')
+        };
+
+        // Calculate total price
+        function calculatePrice() {
+            let total = prices[elements.websiteType.value];
+            
+            // Add page costs
+            const pageCount = elements.pages.value === 'custom' ? 10 : parseInt(elements.pages.value);
+            if (pageCount > 1) {
+                total += (pageCount - 1) * prices.page;
+            }
+
+            // Add feature costs
+            if (elements.seo.checked) total += prices.seo;
+            if (elements.responsive.checked) total += prices.responsive;
+            if (elements.contact.checked) total += prices.contact;
+            if (elements.payment.checked) total += prices.payment;
+
+            // Add express delivery cost
+            if (elements.delivery.value === '24') {
+                total += prices.express;
+            }
+
+            // Update price display
+            elements.totalPrice.textContent = `₹${total.toLocaleString()}`;
+
+            // Update WhatsApp link
+            const features = [];
+            if (elements.seo.checked) features.push('SEO');
+            if (elements.responsive.checked) features.push('Responsive Design');
+            if (elements.contact.checked) features.push('Contact Form');
+            if (elements.payment.checked) features.push('Payment Integration');
+
+            const message = `Hi, I want to order a ${elements.websiteType.value.charAt(0).toUpperCase() + elements.websiteType.value.slice(1)} Website with ${pageCount} pages${features.length ? ', ' + features.join(', ') : ''}, and ${elements.delivery.value} ${elements.delivery.value === '24' ? 'hour' : 'days'} delivery. Estimated Price: ₹${total.toLocaleString()}. Please confirm the order.`;
+            
+            elements.whatsappBtn.href = `https://api.whatsapp.com/send?phone=919427415370&text=${encodeURIComponent(message)}`;
+        }
+
+        // Add event listeners
+        Object.values(elements).forEach(element => {
+            if (element && element !== elements.totalPrice && element !== elements.whatsappBtn) {
+                element.addEventListener('change', calculatePrice);
+            }
+        });
+
+        // Demo button click handler
+        elements.demoBtn.addEventListener('click', () => {
+            const type = elements.websiteType.value;
+            // Add your demo URLs here
+            const demos = {
+                simple: '#simple-demo',
+                standard: '#standard-demo',
+                advanced: '#advanced-demo'
+            };
+            window.open(demos[type], '_blank');
+        });
+
+        // Initial calculation
+        calculatePrice();
+    </script>
+</body>
+</html>
